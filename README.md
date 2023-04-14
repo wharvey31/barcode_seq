@@ -34,11 +34,7 @@ optional arguments:
 ## Optional Plots
 
 ### Hamming Histogram
-```{figure}
-plots/hamming_hist.png
-```
+![Hamming Histogram](plots/hamming_hist.png)
 
 ### Read Content
-```{figure}
-plots/read_content.png
-```
+![Read Content](plots/read_content.png)
