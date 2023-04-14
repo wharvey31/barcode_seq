@@ -1,9 +1,12 @@
 # barcode_seq
 
-Program for determining hamming-1 neighbors and degree of MapSeq reads
+Program for determining hamming-1 neighbors and degree of MapSeq reads.
 
+This takes as an input a FASTQ (gzipped or un) which contains MapSeq reads and produces an output with the whitelisted barcodes written out to a new line.
 
-## Requirments
+Number of barcodes written out is determined by the degree associated with the n-nth most-connected (by hamming-1 degree) barcode where n is the number of cells sequenced  
+
+## Requirements
 ```
 python >= 3.7
 pytrie
