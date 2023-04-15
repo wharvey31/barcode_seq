@@ -117,9 +117,7 @@ def plot_degree_anchor(
     except:
         warnings.warn("Unable to load matplotlib. Still exiting successfully")
         sys.exit(0)
-
     os.makedirs("plots", exist_ok=True)
-
     # Plot histogram with Hamming-1 degree of mapseq nodes
     fig, ax = plt.subplots()
     ax.hist(degree_list, bins=len(set(degree_list)), color="tab:blue", align="right")
@@ -128,7 +126,6 @@ def plot_degree_anchor(
     ax.set_ylabel("Barcodes")
     plt.title("Hamming-1 Neighbors")
     plt.savefig("plots/hamming_hist.png")
-
     # Plot base frequency
     fig, ax = plt.subplots()
     color_dict = {"A": "black", "G": "tab:red", "T": "tab:green", "C": "tab:blue"}
