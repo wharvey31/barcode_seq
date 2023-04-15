@@ -5,6 +5,7 @@ import gzip
 import os, sys
 from pytrie import SortedStringTrie
 import warnings
+import pandas as pd
 
 
 def opener(filename) -> object:
@@ -27,7 +28,6 @@ def read_input(input_file: str) -> tuple[dict, list]:
     except:
         print(f"ERROR: {input_file} does not exist!")
         sys.exit(1)
-
     open_func = opener(input_file)
     read_counts = {}
     read_list = []
@@ -68,6 +68,7 @@ def find_hamming(
 ) -> tuple[int, list, list]:
     # Creates a trie of all sequences
     trie = SortedStringTrie.fromkeys(map_reads)
+    map_counts = {}
     # Iterates through potential sequences and looks for hamming-1 substiutions in trie
     for string in read_list:
         map_string = string[0:anchor_start]
@@ -76,16 +77,19 @@ def find_hamming(
                 if map_string[i] != letter:
                     neighbor = map_string[:i] + letter + map_string[i + 1 :]
                     # Adds dict entry for each sequence if hamming-1 found in trie
-                    if neighbor in trie and neighbor not in read_counts[string]:
-                        read_counts[string][neighbor] = {}
+                    if neighbor in trie and map_string not in map_counts:
+                        map_counts[map_string] = {}
+                        map_counts[map_string][neighbor] = {}
+                    elif neighbor in trie and neighbor not in map_counts[map_string]:
+                        map_counts[map_string][neighbor] = {}
     # Computes hamming-1 degree of all reads
-    hamming_degree = [len(set(read_counts[x])) for x in read_list]
+    hamming_degree = [len(map_counts[x]) for x in map_counts]
     # Zips and sorts potential sequences by their degree
-    degree_zip = zip(map_reads, hamming_degree)
+    degree_zip = zip(map_counts, hamming_degree)
     degree_sorted = sorted(degree_zip, key=lambda x: x[1])[::-1]
     name_list, degree_list = zip(*degree_sorted)
     # Computes degree cutoff based on nyumber of sequenced cells
-    max_degree = degree_list[cells - 1]
+    max_degree = degree_list[100 - 1]
     return max_degree, name_list, degree_list
 
 
