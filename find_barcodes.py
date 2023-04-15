@@ -89,7 +89,7 @@ def find_hamming(
     degree_sorted = sorted(degree_zip, key=lambda x: x[1])[::-1]
     name_list, degree_list = zip(*degree_sorted)
     # Computes degree cutoff based on nyumber of sequenced cells
-    max_degree = degree_list[100 - 1]
+    max_degree = degree_list[cells - 1]
     return max_degree, name_list, degree_list
 
 
